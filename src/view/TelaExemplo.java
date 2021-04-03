@@ -3,6 +3,10 @@ package view;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class TelaExemplo extends JFrame {
     private JLabel lblNome;
@@ -68,9 +72,30 @@ public class TelaExemplo extends JFrame {
         cmbTipoSanguineo = new JComboBox(TIPOSANGUINEO);
         cmbFatorRh = new JComboBox(TIPOFRH);
         cmbCurso = new JComboBox(NOMECURSO);
+        cmbCurso.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED){
+                    trataEventoSelecao();
+                }
+            }
+        });
+
         txtContato = new JTextField();
         btnInserir = new JButton("Inserir");
+        btnInserir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                trataEventoOnClick();
+            }
+        });
         btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                trataEnventoOnClickCancelar();
+            }
+        });
 
 
         lblNome.setBounds(10,10,200,25);
@@ -115,5 +140,14 @@ public class TelaExemplo extends JFrame {
         tela.add(txtTelefoneContato);
         tela.add(btnInserir);
         tela.add(btnCancelar);
+    }
+    void trataEventoOnClick(){
+        JOptionPane.showMessageDialog(this, "Você clicou no botão Inserir");
+    }
+    void trataEnventoOnClickCancelar(){
+        JOptionPane.showMessageDialog(this,"Você clicou no botão Cancelar" );
+    }
+    void trataEventoSelecao(){
+        JOptionPane.showMessageDialog(this, "Selecionado " + cmbCurso.getSelectedItem());
     }
 }
